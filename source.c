@@ -62,22 +62,17 @@ void collectStats(FILE *file){
     printf("TOTAL STEPS: %d\n",steps);
 }
 
-void analyzeLine(char line[256],int *steps){
-    int index = 0;
-    int endIndex = 0;
+void analyzeLine(char line[256],FitbitData* data){
 
-    index = getIndexOfComma(line,5);
-    endIndex = getIndexOfComma(line,6);
+}
 
-    char string[256] = {};
+void getCsv(char line[256], char new[256], int index){
+    //Get the index of the commas
+    int s = getIndexOfComma(line,index);
+    int e = getIndexOfComma(line,index + 1);
 
-    subString(line,string,index,endIndex);
-
-    printf("VALUE FOUND %s\n",string);
-
-    int value = atoi(string);
-
-     *steps += atoi(string);
+    //Substring the value out into the new-string
+    subString(line,new,s,e);
 }
 
 int getIndexOfComma(char line[256],int number){

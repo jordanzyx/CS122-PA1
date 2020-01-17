@@ -26,7 +26,8 @@ typedef struct fitbit
 FILE* loadFitBitFile(FILE *file);
 FILE* loadResultFile(FILE *file);
 void collectStats(FILE *file);
-void analyzeLine(char line[256],int *steps);
+void analyzeLine(char line[256],FitbitData *data);
+void getCsv(char line[256], char new[256], int index);
 int getIndexOfComma(char line[256],int number);
 void subString(char line[256], char new[256], int s,int e);
 
