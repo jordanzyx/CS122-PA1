@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include "source.h"
 
-void loadFitBitFile(FILE *file){
+FILE* loadFitBitFile(FILE *file){
     //Attempt to load the file
     file = fopen("FitbitData.csv","r");
 
@@ -13,14 +13,15 @@ void loadFitBitFile(FILE *file){
     if(file == NULL){
         printf("Error while opening FitbitData.csv\n");
         system("exit");
-        return;
+        return file;
     }
 
     //Inform success
     printf("FitbitData.csv was successfully loaded\n");
+    return file;
 }
 
-void loadResultFile(FILE *file){
+FILE* loadResultFile(FILE *file){
     //Attempt to load the file
     file = fopen("Result.csv","w");
 
@@ -28,20 +29,20 @@ void loadResultFile(FILE *file){
     if(file == NULL){
         printf("Error while opening Result.csv\n");
         system("exit");
-        return;
+        return file;
     }
 
     //Inform success
     printf("Result.csv was successfully loaded\n");
+    return file;
 }
 
 void collectStats(FILE *file){
     //Create local string to be analyzed
-    char string[256];
+    char string[256] = {};
 
     //Skip the first line which is a template
-    fgets(string,256,file);
-    printf("String  = %s\n",string);
+    fscanf(file,"%s",string);
 
     //Loop over each line of the csv file
     while (!feof(file)){

@@ -23,9 +23,10 @@ typedef struct fitbit
     Sleep sleepLevel;
 } FitbitData;
 
-void loadFitBitFile(FILE *file);
-void loadResultFile(FILE *file);
+FILE* loadFitBitFile(FILE *file);
+FILE* loadResultFile(FILE *file);
 void collectStats(FILE *file);
+void analyzeLine(char line[256]);
 
 
 #endif //PA1_SOURCE_H

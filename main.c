@@ -3,12 +3,12 @@
 
 int main() {
     //Create file variables
-    FILE *input;
-    FILE *output;
+    FILE *input = NULL;
+    FILE *output = NULL;
 
     //Attempt to load files
-    loadFitBitFile(input);
-    loadResultFile(output);
+    input = loadFitBitFile(input);
+    output = loadResultFile(output);
 
     //Collect statistics
     collectStats(input);
