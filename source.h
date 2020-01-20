@@ -25,11 +25,13 @@ typedef struct fitbit
 
 FILE* loadFitBitFile(FILE *file);
 FILE* loadResultFile(FILE *file);
-void collectStats(FILE *file);
+void collectStats(FILE *file,FitbitData data[1440]);
 void analyzeLine(char line[256],FitbitData *data);
 void getCsv(char line[256], char new[256], int index);
 int getIndexOfComma(char line[256],int number);
 void subString(char line[256], char new[256], int s,int e);
+void defineArray(FitbitData data[1440]);
+void clearString(char string[256]);
 
 
 #endif //PA1_SOURCE_H
