@@ -1,5 +1,5 @@
 //
-// Created by Jordan Muehlbauer on 1/16/20.
+// Created by Jordan Muehlbauer on 1/16/20
 //
 #include <stdlib.h>
 #include <stdio.h>
@@ -52,7 +52,7 @@ void collectStats(FILE *file,FitbitData data[1440]){
     int i = 0;
 
     //Loop over each line of the csv file
-    while (!feof(file)){
+    for (int j = 0; j < 1440; ++j) {
         //Collect line
         fgets(string,256,file);
 
@@ -62,6 +62,16 @@ void collectStats(FILE *file,FitbitData data[1440]){
         //Increase index
         i++;
     }
+//    while (!feof(file)){
+//        //Collect line
+//        fgets(string,256,file);
+//
+//        //Analyze the line
+//        analyzeLine(string,&data[i]);
+//
+//        //Increase index
+//        i++;
+//    }
 
 }
 
@@ -143,7 +153,7 @@ void analyzeLine(char line[256],FitbitData* data){
     //Get the sleep level
     getCsv(line,temp,7);
 
-    //Conver to integer
+    //Convert to integer
     val = atoi(temp);
 
     //Set up the data's sleep level
