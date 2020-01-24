@@ -50,14 +50,14 @@ void collectStats(FILE *file,FitbitData data[1440]){
 
 
 
-    //Loop over each line of the csv file
-    for (int j = 0; j < 1440; ++j) {
+
+    while(!feof(file)){
         //Collect line
         fgets(string,256,file);
 
 
         //Analyze the line
-        analyzeLine(string,&data[j]);
+        analyzeLine(string,data);
     }
 
 }
@@ -115,14 +115,59 @@ void outputData(double calsBurned,double distance,int floors,int steps,double he
 }
 
 
-void analyzeLine(char line[256],FitbitData* data){
+void analyzeLine(char line[256],FitbitData array[1440]){
     char temp[256] = {};
     char *converter = "";
     double value = 0.0;
     int val = 0;
 
+    //Get the minutes
+    getCsv(line,temp,1);
+    char hour[3] = {};
+    char minutes[3] = {};
+
+    int colon = getIndexOfColon(temp);
+
+    if(colon == 2){
+        //Get hour
+        hour[0] = temp[0];
+        hour[1] = temp[1];
+        hour[2] = 0;
+        //Get minutes
+        minutes[0] = temp[3];
+        minutes[1] = temp[4];
+        minutes[2] = 0;
+    }
+    if(colon == 1){
+        hour[0] = temp[0];
+
+        //Get minutes
+        minutes[0] = temp[2];
+        minutes[1] = temp[3];
+        minutes[2] = 0;
+    }
+
+    //Convert to get index
+    int h = atoi(hour);
+    int m = atoi(minutes);
+    int index = (h * 60) + m;
+    clearString(temp);
+
+    FitbitData *data = &array[index];
+
+
+
+
     //Get the patient id
     getCsv(line,temp,0);
+
+    //Only write to the data if the patient's id is the same as the first in the array
+    if(index != 0){
+        int compare = strcmp(temp,array[0].patient);
+
+        //If the id's arent the same return and dont write to this index
+        if(compare != 0)return;
+    }
 
     //Copy the characters from temp to the data's patient name
     strcpy(data->patient,temp);
@@ -256,4 +301,11 @@ void clearString(char string[256]){
     for (int i = 0; i < 256; ++i) {
         string[i] = 0;
     }
+}
+
+int getIndexOfColon(char str[9]){
+    for (int j = 0; j < 9; ++j) {
+        if(str[j] == ':')return j;
+    }
+    return -1;
 }
