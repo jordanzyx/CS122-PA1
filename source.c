@@ -43,13 +43,10 @@ void collectStats(FILE *file,FitbitData data[1440]){
     char string[256] = {};
 
     //Skip the first line which is a template
-    fscanf(file,"%s",string);
+    fgets(string,256,file);
 
     //Clear the string
     clearString(string);
-
-    //Index counter
-    int i = 0;
 
     //Loop over each line of the csv file
     for (int j = 0; j < 1440; ++j) {
@@ -57,23 +54,41 @@ void collectStats(FILE *file,FitbitData data[1440]){
         fgets(string,256,file);
 
         //Analyze the line
-        analyzeLine(string,&data[i]);
-
-        //Increase index
-        i++;
+        analyzeLine(string,&data[j]);
     }
-//    while (!feof(file)){
-//        //Collect line
-//        fgets(string,256,file);
-//
-//        //Analyze the line
-//        analyzeLine(string,&data[i]);
-//
-//        //Increase index
-//        i++;
-//    }
 
 }
+
+void analyzeData(FitbitData data[1440],double *calsBurned,double *distance,int *floors,int *steps,double *heartRate,int *maxSteps,int *poorSleep){
+    //Collect totals for data
+
+    for (int i = 0; i < 1440; ++i) {
+        //Get item at index
+        FitbitData item = data[i];
+
+        if(*maxSteps < item.steps)*maxSteps = item.steps;
+
+        //Add up totals for each field
+        *calsBurned = *calsBurned + item.calories;
+        *distance = *distance + item.distance;
+        *floors = *floors + item.floors;
+        *steps = *steps + item.steps;
+        *heartRate = *heartRate + item.heartRate;
+    }
+
+    *heartRate = *heartRate / 1440;
+}
+
+void outputData(double calsBurned,double distance,int floors,int steps,double heartRate,int maxSteps,int poorSleep,FILE *output){
+    fprintf(output,"Cals burned: %.2lf\n",calsBurned);
+    fprintf(output,"Distance %.2lf\n",distance);
+    fprintf(output,"Total Floors %d\n",floors);
+    fprintf(output,"Total Steps %d\n",steps);
+    fprintf(output,"Heartrate %.2lf\n",heartRate);
+    fprintf(output,"Max steps %d\n",maxSteps);
+    fprintf(output,"Poor sleep %d\n",poorSleep);
+}
+
 
 void analyzeLine(char line[256],FitbitData* data){
     char temp[256] = {};
@@ -207,6 +222,7 @@ void defineArray(FitbitData data[1440]){
 }
 
 void subString(char line[256], char new[256], int s,int e){
+    if(s == 0)s = - 1;
     strncat(new,&line[s + 1],e-(s + 1));
 }
 
