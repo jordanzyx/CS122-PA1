@@ -48,10 +48,13 @@ void collectStats(FILE *file,FitbitData data[1440]){
     //Clear the string
     clearString(string);
 
+
+
     //Loop over each line of the csv file
     for (int j = 0; j < 1440; ++j) {
         //Collect line
         fgets(string,256,file);
+
 
         //Analyze the line
         analyzeLine(string,&data[j]);
@@ -107,13 +110,8 @@ void analyzeData(FitbitData data[1440],double *calsBurned,double *distance,int *
 }
 
 void outputData(double calsBurned,double distance,int floors,int steps,double heartRate,int maxSteps,char *sleepS,char *sleepE,FILE *output){
-    fprintf(output,"Cals burned: %.2lf\n",calsBurned);
-    fprintf(output,"Distance %.2lf\n",distance);
-    fprintf(output,"Total Floors %d\n",floors);
-    fprintf(output,"Total Steps %d\n",steps);
-    fprintf(output,"Heartrate %.2lf\n",heartRate);
-    fprintf(output,"Max steps %d\n",maxSteps);
-    fprintf(output,"Poor sleep %s to %s\n",sleepS,sleepE);
+        fprintf(output,"Total Calories, Total Distance, Total Floors, Total Steps, Avg Heartrate, Max Steps, Sleep\n");
+        fprintf(output,"%2.lf, %.2lf, %d, %d, %.2lf, %d, %s:%s\n",calsBurned,distance,floors,steps,heartRate,maxSteps,sleepS,sleepE);
 }
 
 
