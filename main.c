@@ -1,3 +1,11 @@
+/*******************************************************************************************
+* Programmer: Jordan Muehlbayer *
+* Class: CptS 122, Spring, 2019;
+* Programming Assignment: PA1 *
+* Date: January 24, 2020 *
+* Description: This program computes information based on fitbit data. *
+*******************************************************************************************/
+
 #include <stdio.h>
 #include "source.h"
 

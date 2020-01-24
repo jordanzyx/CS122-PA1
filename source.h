@@ -1,6 +1,10 @@
-//
-// Created by Jordan Muehlbauer on 1/16/20.
-//
+/*******************************************************************************************
+* Programmer: Jordan Muehlbayer *
+* Class: CptS 122, Spring, 2019;
+* Programming Assignment: PA1 *
+* Date: January 24, 2020 *
+* Description: definition of structs and functions to be implemented in source.c *
+*******************************************************************************************/
 #include <stdio.h>
 
 #ifndef PA1_SOURCE_H
