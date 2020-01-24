@@ -13,7 +13,8 @@ int main() {
     int totalSteps = 0;
     double heartRate = 0;
     int maxSteps = 0;
-    int poorSleep = 0;
+    char sleepS[9] = {};
+    char sleepE[9] = {};
 
     //Create fitbit data array
     FitbitData data[1440] = {};
@@ -29,10 +30,10 @@ int main() {
     collectStats(input,data);
 
     //Analyze the data
-    analyzeData(data,&calsBurned,&totalDistance,&totalFloors,&totalSteps,&heartRate,&maxSteps,&poorSleep);
+    analyzeData(data,&calsBurned,&totalDistance,&totalFloors,&totalSteps,&heartRate,&maxSteps,sleepS,sleepE);
 
     //Output the data
-    outputData(calsBurned,totalDistance,totalFloors,totalSteps,heartRate,maxSteps,poorSleep,output);
+    outputData(calsBurned,totalDistance,totalFloors,totalSteps,heartRate,maxSteps,sleepS,sleepE,output);
 
     //Close files
     fclose(input);

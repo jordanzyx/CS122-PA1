@@ -59,14 +59,36 @@ void collectStats(FILE *file,FitbitData data[1440]){
 
 }
 
-void analyzeData(FitbitData data[1440],double *calsBurned,double *distance,int *floors,int *steps,double *heartRate,int *maxSteps,int *poorSleep){
+void analyzeData(FitbitData data[1440],double *calsBurned,double *distance,int *floors,int *steps,double *heartRate,int *maxSteps,char *sleepS,char *sleepE){
     //Collect totals for data
+
+    //Create indexes for the longest range of sleep
+    int start = 0;
+    int end = 0;
+    int sleepSum = 0;
+    int tempStart = 0;
+    int tempEnd = 0;
+    int tempSum = 0;
 
     for (int i = 0; i < 1440; ++i) {
         //Get item at index
         FitbitData item = data[i];
 
         if(*maxSteps < item.steps)*maxSteps = item.steps;
+
+        //Find sleep range
+        if(item.sleepLevel >= 1){
+            if(tempSum == 0)tempStart = i;
+            tempSum += item.sleepLevel;
+            tempEnd = i;
+
+            if(tempSum > sleepSum){
+                sleepSum = tempSum;
+                start = tempStart;
+                end = tempEnd;
+            }
+        }else tempSum = 0;
+
 
         //Add up totals for each field
         *calsBurned = *calsBurned + item.calories;
@@ -77,16 +99,21 @@ void analyzeData(FitbitData data[1440],double *calsBurned,double *distance,int *
     }
 
     *heartRate = *heartRate / 1440;
+    for (int j = 0; j < 9; ++j) {
+        sleepS[j] = data[start].minute[j];
+        sleepE[j] = data[end].minute[j];
+    }
+
 }
 
-void outputData(double calsBurned,double distance,int floors,int steps,double heartRate,int maxSteps,int poorSleep,FILE *output){
+void outputData(double calsBurned,double distance,int floors,int steps,double heartRate,int maxSteps,char *sleepS,char *sleepE,FILE *output){
     fprintf(output,"Cals burned: %.2lf\n",calsBurned);
     fprintf(output,"Distance %.2lf\n",distance);
     fprintf(output,"Total Floors %d\n",floors);
     fprintf(output,"Total Steps %d\n",steps);
     fprintf(output,"Heartrate %.2lf\n",heartRate);
     fprintf(output,"Max steps %d\n",maxSteps);
-    fprintf(output,"Poor sleep %d\n",poorSleep);
+    fprintf(output,"Poor sleep %s to %s\n",sleepS,sleepE);
 }
 
 

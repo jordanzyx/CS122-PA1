@@ -32,7 +32,7 @@ int getIndexOfComma(char line[256],int number);
 void subString(char line[256], char new[256], int s,int e);
 void defineArray(FitbitData data[1440]);
 void clearString(char string[256]);
-void analyzeData(FitbitData data[1440],double *calsBurned,double *distance,int *floors,int *steps,double *heartRate,int *maxSteps,int *poorSleep);
-void outputData(double calsBurned,double distance,int floors,int steps,double heartRate,int maxSteps,int poorSleep,FILE *output);
+void analyzeData(FitbitData data[1440],double *calsBurned,double *distance,int *floors,int *steps,double *heartRate,int *maxSteps,char *sleepS,char *sleepE);
+void outputData(double calsBurned,double distance,int floors,int steps,double heartRate,int maxSteps,char *sleepS,char *sleepE,FILE *output);
 
 #endif //PA1_SOURCE_H
